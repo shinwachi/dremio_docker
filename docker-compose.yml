@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  dremio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9047:9047"
+      - "8989:31010"
+      - "8990:45678"
+    volumes:
+      - ./bkup:/opt/dremio/bkup
+    labels:
+      - traefik.enable=true
+      - traefik.backend=dremio
+      - traefik.frontend.rule=Host:dremio.onprem.local
+      - traefik.docker.network=default
+      - traefik.port=8989
+
+
